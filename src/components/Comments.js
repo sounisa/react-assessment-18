@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react"
+import Comment from './Comment'
+
 const Comments = () => {
     // Insturction:
     // Use endpoint: https://jsonplaceholder.typicode.com/comments to get a list of comments. 
@@ -6,11 +9,27 @@ const Comments = () => {
 
     // you will need to use the useEffect hook. Do this in async / await syntax.
 
+const [comments, setComments] = useState([])
 
-    return(
-        // Replace this with your code.
-        <h1>Comments component</h1>
+useEffect(() => {
+    const getData = async () => {
+        const response = await fetch('https://jsonplaceholder.typicode.com/comments')
+        const data = await response.json() 
+        setComments(data)
+    }
+    getData()
+})    
+
+    return (
+        <div>
+            <h1>{'Comments:'}</h1>
+            <Comment
+                comments = {comments}
+                key = {comments.id}
+            />
+
+        </div>
     )
-}
 
+}
 export default Comments
